@@ -11,10 +11,49 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+//*******************   FRONTEND   **************************
+Route::get('/', [
+    'uses' => 'FrontendController@index',
+    'as' => 'index'
+]);
+
+Route::get('/post/{slug}', [
+    'uses' => 'FrontendController@singlePost',
+    'as' => 'post.single'
+]);
+
+Route::get('/category/{id}',[
+   
+    'uses' => 'FrontendController@Category',
+    'as' => 'category.single'
+]);
+
+Route::get('/tag/{id}',[
+   
+    'uses' => 'FrontendController@Tag',
+    'as' => 'tag.single'
+]);
+
+Route::get('/results',[
+   
+    'uses' => 'FrontendController@Search',
+    'as' => 'search.results'
+]);
+
+Route::post('/subscribe', function(){
+    
+    $email = request('email');
+    Newsletter::subscribe($email);
+    Session::flash('success', 'Subscribed Successfully.');
+    return redirect()->back();
+    
 });
 
+
+
+
+
+//*******************   BACKEND   **************************
 Auth::routes();
 
 Route::group(['prefix'=>'admin', 'middleware' => 'auth'],function(){
@@ -130,6 +169,16 @@ Route::group(['prefix'=>'admin', 'middleware' => 'auth'],function(){
         'as' => 'user.delete',
     ]);
     
+    Route::get('/user/admin/{id}',[
+        'uses' => 'UsersController@admin',
+        'as' => 'user.admin',
+    ]);
+    
+    Route::get('/user/not-admin/{id}',[
+        'uses' => 'UsersController@not_admin',
+        'as' => 'user.not.admin',
+    ]);
+    
      Route::post('/user/store',[
         'uses' => 'UsersController@store',
         'as' => 'user.store',
@@ -138,6 +187,16 @@ Route::group(['prefix'=>'admin', 'middleware' => 'auth'],function(){
     Route::post('/user/update/{id}',[
         'uses' => 'UsersController@update',
         'as' => 'user.update',
+    ]);
+    
+    Route::get('/user/profile',[
+        'uses' => 'ProfilesController@index',
+        'as' => 'user.profile',
+    ]);
+    
+    Route::post('/user/profile/update',[
+        'uses' => 'ProfilesController@update',
+        'as' => 'user.profile.update',
     ]);
     //***END*** CRUD for Users
     
@@ -181,6 +240,17 @@ Route::group(['prefix'=>'admin', 'middleware' => 'auth'],function(){
     Route::get('/test', function(){
         return App\User::find(1)->profile;
     });
+    
+    //settings
+    Route::get('/settings',[
+        'uses' => 'SettingsController@index',
+        'as' => 'settings',
+    ]);
+    
+    Route::post('/setting/update',[
+        'uses' => 'SettingsController@update',
+        'as' => 'setting.update',
+    ]);
 });
 
 

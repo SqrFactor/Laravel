@@ -16,13 +16,17 @@ use SoftDeletes;
         return $this->belongsTo('App\Category');
     }
     
+     public function user(){
+        return $this->belongsTo('App\User');
+    }
+    
     public function tags(){
         
         return $this->belongsToMany('App\Tag');
     }
     
     protected $fillable = [
-    'post_title', 'post_body','featured_img','category_id','slug',
+    'post_title', 'post_body','featured_img','category_id','slug','user_id',
     ];
     
     protected $dates = [

@@ -36,10 +36,12 @@
                 </div>
                 <div class="form-group">
                     <label for="content"> Content</label>
-                    <textarea class="form-control" placeholder="Content of the post" name="postContentInput" rows="5"></textarea>
+                    <textarea class="form-control" id="content" placeholder="Content of the post" name="postContentInput" rows="5"></textarea>
                 </div>
                 <div class="form-group">
                     <button class="btn btn-primary" type="submit"> Publish Post</button>
+                    <a href="{{ route('posts.index') }}" class="btn btn-default btn-md">
+                        Back</a>
                 </div>
             </form>
         </div>
@@ -48,4 +50,20 @@
     </div>
 
 
+@stop
+
+@section('styles')
+<!-- include summernote css/js-->
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.6/summernote.css" rel="stylesheet">
+
+@stop
+
+@section('scripts')
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.6/summernote.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#content').summernote();
+    });
+  </script>
 @stop

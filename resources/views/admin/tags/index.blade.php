@@ -4,7 +4,13 @@
 
     
     <div class="panel panel-primary">
-        <div class="panel-heading">Tags Table</div>
+        <div class="panel-heading">
+        <div class="row">
+            <div class="col-md-10">Tags Table</div>
+            <div class="col-md-2"><a href="{{ route('tag.create') }}" class="btn btn-default btn-xs">
+                        Add Tags</a></div>
+            </div>
+        </div>
         <div class="panel-body">
     <table class="table table-hover">
         <thead>

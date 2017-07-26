@@ -7,6 +7,7 @@ use App\Category;
 use App\Post;
 use Session;
 use App\Tag;
+use Auth;
 
 class PostsController extends Controller
 {
@@ -33,9 +34,9 @@ class PostsController extends Controller
         $categories = Category::all();
         $tags = tag::all();
         
-        if($categories->count()==0)
+        if($categories->count()==0 || $tags->count()==0)
         {
-            Session::flash('error', 'There are no categories listed. Please create a category first.');
+            Session::flash('error', 'There are no categories or tags listed. Please create a category/tag first.');
             return redirect()->back();
         }
         
@@ -74,6 +75,7 @@ class PostsController extends Controller
                 'featured_img' => 'uploads/posts/'.$featured_img_new_name,
                 'category_id'=> $request->category_id,
                 'slug'=> str_slug($request->postTitleInput),
+                'user_id' => Auth::id(),
             ]);
             
             $post->tags()->attach($request->tags);
@@ -192,7 +194,7 @@ class PostsController extends Controller
     public function restore($id){
         $post = Post::withTrashed()->where('id' , $id)->restore();
         Session::flash('success', 'Post restored successfully.');
-        return redirect()->back;
+        return redirect()->back();
         //return view('admin.posts.trashed', compact('post'));
     }
 }

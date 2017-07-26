@@ -20,6 +20,8 @@
                 
                 <div class="form-group">
                     <button class="btn btn-primary" type="submit"> Add User</button>
+                     <a href="{{ route('users') }}" class="btn btn-default btn-md">
+                        Back</a>
                 </div>
             </form>
         </div>

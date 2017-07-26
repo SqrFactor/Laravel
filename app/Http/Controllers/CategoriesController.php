@@ -46,6 +46,7 @@ class CategoriesController extends Controller
         //dd($request->all());
         $category = new Category;
         $category->category_name = $request->categoryInput;
+        $category->slug = str_slug($request->postTitleInput);
         $category->save();
         
         Session::flash('success', 'You successfully created a category');
@@ -105,7 +106,13 @@ class CategoriesController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::find($id)->delete();
+        $category = Category::find($id);
+        
+        foreach($category->posts as $post){
+            $post->delete();
+        }
+        
+        $category->delete();
         
         Session::flash('success', 'You successfully deleted a category');
         return redirect()->route('categories');

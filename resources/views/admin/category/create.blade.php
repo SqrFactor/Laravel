@@ -16,7 +16,10 @@
                 
                 <div class="form-group">
                     <button class="btn btn-primary" type="submit"> Add Category </button>
+                    <a href="{{ route('categories') }}" class="btn btn-default btn-md">
+                        Back</a>
                 </div>
+                
             </form>
         </div>
          

@@ -4,7 +4,13 @@
 
     
     <div class="panel panel-primary">
-        <div class="panel-heading">Categories Table</div>
+        <div class="panel-heading">
+         <div class="row">
+            <div class="col-sm-10">Trashed Post Table</div>
+            <div class="col-sm-1 col-sm-offset-1"><a href="{{ route('posts.index') }}" class="btn btn-default btn-xs">
+                        Back</a></div>
+            </div>
+        </div>
         <div class="panel-body">
     <table class="table table-hover">
         <thead>

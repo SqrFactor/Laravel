@@ -9,6 +9,10 @@ use Session;
 
 class UsersController extends Controller
 {
+    
+    public function __construct(){
+        $this->middleware('admin');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +24,7 @@ class UsersController extends Controller
       
         $users = User::all();
         $profiles = Profile::all();
-        //dd($users->first()->profile);
+        //dd($users->all()->profile);
         
         
         return view('admin.users.index',  [ 'users' => $users  ]);
@@ -58,10 +62,11 @@ class UsersController extends Controller
         
         $profile = Profile::create([
             'user_id' => $user->id,
+            'avatar' => 'uploads/avatars/1.png',
         ]);
         
         Session::flash('success', 'User created successfully.');
-        return redirect()->route('users');
+        return redirect()->route('users','profile');
     }
 
     /**
@@ -107,5 +112,29 @@ class UsersController extends Controller
     public function destroy($id)
     {
         //
+        $user = User::find($id);
+        $user->profile->delete();
+        $user->delete();
+        Session::flash('success', 'User deleted permanently.');
+        return redirect()->back();
+        
+    }
+    
+    public function admin($id)
+    {
+        $user = User::find($id);
+        $user->admin = 1;
+        $user->save();
+        Session::flash('success','Admin made successfully.');
+        return redirect()->back();
+    }
+    
+     public function not_admin($id)
+    {
+        $user = User::find($id);
+        $user->admin = 0;
+        $user->save();
+        Session::flash('success','Admin removed successfully.');
+        return redirect()->back();
     }
 }

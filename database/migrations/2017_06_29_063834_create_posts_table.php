@@ -22,6 +22,7 @@ class CreatePostsTable extends Migration
             $table->string('featured_img');
             $table->softDeletes();
             $table->timestamps();
+            $table->integer('user_id');
         });
     }
 

@@ -16,6 +16,8 @@
                 
                 <div class="form-group">
                     <button class="btn btn-primary" type="submit"> Add Tag </button>
+                     <a href="{{ route('tags') }}" class="btn btn-default btn-md">
+                        Back</a>
                 </div>
             </form>
         </div>
